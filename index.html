@@ -12,37 +12,37 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" id="display2" disabled>
                     <button class="generate-btn">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" id="display" disabled>
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
+                              <div class="button" id="btn-7" onclick="appendNumber(this.id);">7</div>
+                              <div class="button" id="btn-8" onclick="appendNumber(this.id);">8</div>
+                              <div class="button" id="btn-9" onclick="appendNumber(this.id);">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
+                              <div class="button" id="btn-4" onclick="appendNumber(this.id);">4</div>
+                              <div class="button" id="btn-5" onclick="appendNumber(this.id);">5</div>
+                              <div class="button" id="btn-6" onclick="appendNumber(this.id);">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
+                              <div class="button" id="btn-1" onclick="appendNumber(this.id);">1</div>
+                              <div class="button" id="btn-2" onclick="appendNumber(this.id);">2</div>
+                              <div class="button" id="btn-3" onclick="appendNumber(this.id);">3</div>
                             </div>
                             <div class="calc-button-row">
-                                <div class="button">&lt;</div>
-                                <div class="button">0</div>
-                                <div class="button">C</div>
+                                <div class="button" id="btn-d">&lt;</div>
+                                <div class="button" id="btn-0" onclick="appendNumber(this.id);">0</div>
+                                <div class="button" id="btn-c">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
+                                <button type="submit" id="submit" class="submit-btn">Submit</button>
                                 <p class="action-left">3 try left</p>
                             </div>
                     </div>
@@ -50,9 +50,31 @@
             </div>
         </div>
         <div class="notify-section">
-            <p class="notify">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <p class="notify" id="notifyFail">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="notifySuccess">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
+    <script>
+        var screen = '';
+
+        
+        function clear(){
+
+        }
+        function del(){
+
+        }
+        function appendNumber(number){
+            screen = screen + document.getElementById(number).innerHTML;
+            display();
+        }
+        function updateNotification(){
+
+        }
+        function display(){
+            console.log(screen);
+            document.getElementById('display').value = screen;
+        }
+    </script>
 </body>
 </html>
