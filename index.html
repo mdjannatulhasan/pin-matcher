@@ -13,7 +13,7 @@
             <div class="col-md-6">
                 <div class="pin-generator half-width">
                     <input class="form-control" type="text" id="display2" disabled>
-                    <button class="generate-btn">Generate Pin</button>
+                    <button class="generate-btn" onclick="pinGenerate()">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
@@ -22,57 +22,87 @@
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button" id="btn-7" onclick="appendNumber(this.id);">7</div>
-                              <div class="button" id="btn-8" onclick="appendNumber(this.id);">8</div>
-                              <div class="button" id="btn-9" onclick="appendNumber(this.id);">9</div>
+                                <div class="button" id="btn-7" onclick="appendNumber(this.id);">7</div>
+                                <div class="button" id="btn-8" onclick="appendNumber(this.id);">8</div>
+                                <div class="button" id="btn-9" onclick="appendNumber(this.id);">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button" id="btn-4" onclick="appendNumber(this.id);">4</div>
-                              <div class="button" id="btn-5" onclick="appendNumber(this.id);">5</div>
-                              <div class="button" id="btn-6" onclick="appendNumber(this.id);">6</div>
+                                <div class="button" id="btn-4" onclick="appendNumber(this.id);">4</div>
+                                <div class="button" id="btn-5" onclick="appendNumber(this.id);">5</div>
+                                <div class="button" id="btn-6" onclick="appendNumber(this.id);">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button" id="btn-1" onclick="appendNumber(this.id);">1</div>
-                              <div class="button" id="btn-2" onclick="appendNumber(this.id);">2</div>
-                              <div class="button" id="btn-3" onclick="appendNumber(this.id);">3</div>
+                                <div class="button" id="btn-1" onclick="appendNumber(this.id);">1</div>
+                                <div class="button" id="btn-2" onclick="appendNumber(this.id);">2</div>
+                                <div class="button" id="btn-3" onclick="appendNumber(this.id);">3</div>
                             </div>
                             <div class="calc-button-row">
-                                <div class="button" id="btn-d">&lt;</div>
+                                <div class="button" id="btn-d" onclick="del()">&lt;</div>
                                 <div class="button" id="btn-0" onclick="appendNumber(this.id);">0</div>
-                                <div class="button" id="btn-c">C</div>
+                                <div class="button" id="btn-c" onclick="clearall()">C</div>
                             </div>
                             <div>
-                                <button type="submit" id="submit" class="submit-btn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <button type="submit" id="submit" class="submit-btn" onclick="action()">Submit</button>
+                                <p class="action-left" id="actionLeft"><span id="actionCount">4</span> try left</p>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="notify-section">
-            <p class="notify" id="notifyFail">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify" id="notifySuccess">✅ Pin Matched... Secret door is opening for you</p>
+            <div class="notify-section">
+                <p class="notify" id="notifyFail">❌ Pin Didn't Match, Please try again</p>
+                <p class="notify" id="notifySuccess">✅ Pin Matched... Secret door is opening for you</p>
+            </div>
         </div>
     </div>
     <script>
         var screen = '';
-
+        var actionCount = 4;
+        var pin = 0;
         
-        function clear(){
-
-        }
         function del(){
-
+            screen = screen.substring(0,screen.length - 1);
+            display();
         }
         function appendNumber(number){
             screen = screen + document.getElementById(number).innerHTML;
             display();
         }
-        function updateNotification(){
-
+        function action(){
+            if(actionCount > 0){
+                actionCount = actionCount - 1;
+                updateAction();
+                updateNotification();
+            } else{
+                alert('No tries left');
+            }
+            clearall();
         }
+        function updateNotification(){
+            inputPin = parseFloat(document.getElementById('display').value);
+            if(pin == inputPin){
+                document.getElementById('notifySuccess').style.display = 'block';
+                document.getElementById('notifyFail').style.display = 'none';
+                actionCount = 4;
+                updateAction();
+            }else{
+                document.getElementById('notifySuccess').style.display = 'none';
+                document.getElementById('notifyFail').style.display = 'block';
+            }
+        }
+        function clearall(){
+            screen = '';
+            display();
+        }
+        function updateAction(){
+            document.getElementById('actionCount').innerHTML = actionCount;
+        }
+        function pinGenerate(){
+            pin = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('display2').value = pin;
+        }
+
         function display(){
-            console.log(screen);
             document.getElementById('display').value = screen;
         }
     </script>
